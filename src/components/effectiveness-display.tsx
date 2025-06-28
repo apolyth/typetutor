@@ -34,6 +34,7 @@ function EffectivenessCard({
   description,
   types,
   onTypeClick,
+  attackingType,
 }: EffectivenessCardProps) {
   if (types.length === 0) return null;
 
