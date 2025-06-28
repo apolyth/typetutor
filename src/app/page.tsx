@@ -51,7 +51,7 @@ export default function Home() {
               <EffectivenessDisplay attackingType={selectedType} />
             </TabsContent>
             <TabsContent value="quiz" className="mt-4">
-              <Quiz attackingType={selectedType} />
+              <Quiz key={selectedType} attackingType={selectedType} />
             </TabsContent>
           </Tabs>
         )}

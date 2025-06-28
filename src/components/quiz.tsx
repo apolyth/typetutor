@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -22,7 +22,8 @@ const EFFECTIVENESS_OPTIONS = [
 
 export function Quiz({ attackingType }: { attackingType: string }) {
   const { recordResult, getQuizQuestions } = useSpacedRepetition();
-  const [questions, setQuestions] = useState<string[]>([]);
+
+  const [questions, setQuestions] = useState(() => getQuizQuestions(attackingType));
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -30,15 +31,6 @@ export function Quiz({ attackingType }: { attackingType: string }) {
   const [showResults, setShowResults] = useState(false);
   const [aiExplanation, setAiExplanation] = useState("");
   const [isAiLoading, setIsAiLoading] = useState(false);
-
-  useEffect(() => {
-    setQuestions(getQuizQuestions(attackingType));
-    setCurrentQuestionIndex(0);
-    setScore(0);
-    setShowResults(false);
-    setIsAnswered(false);
-    setSelectedAnswer(null);
-  }, [attackingType, getQuizQuestions]);
 
   const defendingType = useMemo(
     () => questions[currentQuestionIndex],
@@ -95,6 +87,7 @@ export function Quiz({ attackingType }: { attackingType: string }) {
     setShowResults(false);
     setIsAnswered(false);
     setSelectedAnswer(null);
+    setAiExplanation('');
   };
   
   if (questions.length === 0) {
