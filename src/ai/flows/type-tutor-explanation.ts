@@ -10,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import { getEffectiveness } from '@/lib/pokemon-data';
 
 const TypeTutorExplanationInputSchema = z.object({
   attackingType: z.string().describe('The attacking Pokemon type.'),
@@ -28,14 +29,16 @@ export async function typeTutorExplanation(input: TypeTutorExplanationInput): Pr
   return typeTutorExplanationFlow(input);
 }
 
+const PromptInputSchema = TypeTutorExplanationInputSchema.extend({
+    effectiveness: z.string().describe('The effectiveness of the matchup (e.g., "Super Effective").'),
+});
+
 const prompt = ai.definePrompt({
   name: 'typeTutorExplanationPrompt',
-  input: {schema: TypeTutorExplanationInputSchema},
+  input: {schema: PromptInputSchema},
   output: {schema: TypeTutorExplanationOutputSchema},
-  prompt: `Explain why the attacking Pokemon type {{{attackingType}}} is {{effectiveness attackingType=attackingType defendingType=defendingType}} against the defending Pokemon type {{{defendingType}}}, using an analogy to make it easier to understand.`,
+  prompt: `Explain why the attacking Pokemon type {{{attackingType}}} is {{{effectiveness}}} against the defending Pokemon type {{{defendingType}}}, using an analogy to make it easier to understand.`,
   temperature: 0.7,
-  // Note: The effectiveness value is calculated in the React component.
-  // This value will then need to be passed to the prompt.
 });
 
 const typeTutorExplanationFlow = ai.defineFlow(
@@ -45,9 +48,17 @@ const typeTutorExplanationFlow = ai.defineFlow(
     outputSchema: TypeTutorExplanationOutputSchema,
   },
   async input => {
-    // Here, you might call an external API or database to fetch additional data if needed.
-    // For this example, we'll just pass the input directly to the prompt.
-    const {output} = await prompt(input);
+    const { label: effectiveness } = getEffectiveness(
+      input.attackingType,
+      input.defendingType
+    );
+
+    const promptInput = {
+      ...input,
+      effectiveness,
+    };
+    
+    const {output} = await prompt(promptInput);
     return output!;
   }
 );
