@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { POKEMON_TYPES } from "@/lib/pokemon-data";
+import { POKEMON_TYPES, getEffectiveness } from "@/lib/pokemon-data";
 
 const STORAGE_KEY = "pokemon-type-tutor-progress";
 
@@ -79,8 +79,13 @@ export function useSpacedRepetition() {
 
   const getQuizQuestions = useCallback(
     (attackingType: string): string[] => {
-      const defendingTypes = POKEMON_TYPES.map(t => t.name).filter(t => t !== attackingType);
+      const allDefendingTypes = POKEMON_TYPES.map(t => t.name).filter(t => t !== attackingType);
       
+      const defendingTypes = allDefendingTypes.filter(defendingType => {
+        const { multiplier } = getEffectiveness(attackingType, defendingType);
+        return multiplier !== 1;
+      });
+
       const typeProgress = progress[attackingType] || {};
 
       const weightedList = defendingTypes.flatMap(type => {

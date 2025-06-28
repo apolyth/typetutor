@@ -16,7 +16,6 @@ import { Skeleton } from "./ui/skeleton";
 
 const EFFECTIVENESS_OPTIONS = [
   "Super Effective",
-  "Normal",
   "Not Very Effective",
   "No Effect",
 ];
@@ -99,7 +98,7 @@ export function Quiz({ attackingType }: { attackingType: string }) {
   };
   
   if (questions.length === 0) {
-    return <Card><CardContent><p>Loading quiz...</p></CardContent></Card>
+    return <Card><CardContent className="pt-6"><p>There are no special effectiveness matchups for this type to quiz on.</p></CardContent></Card>
   }
 
   if (showResults) {
