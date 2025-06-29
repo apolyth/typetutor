@@ -14,15 +14,17 @@ To get started, take a look at `src/app/page.tsx`.
 
 ## How to Set Up on GitHub
 
-1.  **Create a new repository** on [GitHub](https://github.com/new).
+The instructions below are for using Git, a version control system, to upload your code to GitHub. You'll need to run these commands in your computer's command line or terminal (not in Firebase Studio) from the directory where your project files are saved.
+
+1.  **Create a new repository** on GitHub named `typetutor`. You can do that here: [https://github.com/new](https://github.com/new).
 2.  **Initialize Git** in your project folder:
     ```bash
     git init
     git branch -M main
     ```
-3.  **Add the remote repository:**
+3.  **Add your new repository as the "origin":**
     ```bash
-    git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+    git remote add origin https://github.com/apolyth/typetutor.git
     ```
 4.  **Add, commit, and push your files:**
     ```bash
