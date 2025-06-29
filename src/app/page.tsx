@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TypeSelector } from "@/components/type-selector";
 import { EffectivenessDisplay } from "@/components/effectiveness-display";
+import { ResistanceDisplay } from "@/components/resistance-display";
 import { Quiz } from "@/components/quiz";
 import { POKEMON_TYPES } from "@/lib/pokemon-data";
 import { TypeIcon } from "@/components/icons";
@@ -43,12 +44,16 @@ export default function Home() {
 
         {selectedType && (
           <Tabs defaultValue="study" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="study">Effectiveness</TabsTrigger>
+              <TabsTrigger value="resistances">Resistances & Weaknesses</TabsTrigger>
               <TabsTrigger value="quiz">Quiz</TabsTrigger>
             </TabsList>
             <TabsContent value="study" className="mt-4">
               <EffectivenessDisplay attackingType={selectedType} />
+            </TabsContent>
+            <TabsContent value="resistances" className="mt-4">
+              <ResistanceDisplay defendingType={selectedType} />
             </TabsContent>
             <TabsContent value="quiz" className="mt-4">
               <Quiz key={selectedType} attackingType={selectedType} />
