@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { POKEMON_TYPES, getEffectiveness } from "@/lib/pokemon-data";
+import { shuffleArray } from "@/lib/utils";
 
 const STORAGE_KEY = "pokemon-type-tutor-progress";
 
@@ -16,16 +17,6 @@ type AllProgress = {
     [defendingType: string]: MatchupProgress;
   };
 };
-
-// Fisher-Yates shuffle
-function shuffleArray<T>(array: T[]): T[] {
-  const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  }
-  return newArray;
-}
 
 export function useSpacedRepetition() {
   const [progress, setProgress] = useState<AllProgress>({});

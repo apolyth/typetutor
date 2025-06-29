@@ -61,6 +61,30 @@ export const getEffectiveness = (attackingType: string, defendingType: string): 
   return { multiplier, label };
 };
 
+export const getCombinedEffectiveness = (
+  attackingType: string,
+  defendingTypes: string[]
+): { multiplier: number; label: string } => {
+  if (defendingTypes.length === 0) {
+    return { multiplier: 1, label: 'Normal' };
+  }
+
+  const multiplier = defendingTypes.reduce((acc, defender) => {
+    return acc * (TYPE_CHART[attackingType]?.[defender] ?? 1);
+  }, 1);
+
+  let label = `${multiplier}x Damage`;
+  if (multiplier === 4) label = '4x Super Effective';
+  if (multiplier === 2) label = '2x Super Effective';
+  if (multiplier === 1) label = 'Normal Damage';
+  if (multiplier === 0.5) label = '0.5x Not Very Effective';
+  if (multiplier === 0.25) label = '0.25x Not Very Effective';
+  if (multiplier === 0) label = 'No Effect';
+
+  return { multiplier, label };
+};
+
+
 export const getTypeColor = (typeName: string): string => {
   return POKEMON_TYPES.find(t => t.name === typeName)?.color || '#FFFFFF';
 };

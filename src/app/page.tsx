@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TypeSelector } from "@/components/type-selector";
 import { EffectivenessDisplay } from "@/components/effectiveness-display";
 import { ResistanceDisplay } from "@/components/resistance-display";
 import { Quiz } from "@/components/quiz";
+import { MasterQuiz } from "@/components/master-quiz";
 import { POKEMON_TYPES } from "@/lib/pokemon-data";
 import { TypeIcon } from "@/components/icons";
 
@@ -42,8 +43,8 @@ export default function Home() {
           </CardContent>
         </Card>
 
-        {selectedType && (
-          <Tabs defaultValue="study" className="w-full">
+        {selectedType ? (
+          <Tabs defaultValue="study" className="w-full mb-8">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="study">Effectiveness</TabsTrigger>
               <TabsTrigger value="resistances">Resistances & Weaknesses</TabsTrigger>
@@ -59,7 +60,24 @@ export default function Home() {
               <Quiz key={selectedType} attackingType={selectedType} />
             </TabsContent>
           </Tabs>
+        ) : (
+          <Card className="mb-8 text-center py-8">
+             <CardContent>
+                <p className="text-muted-foreground">Select a type above to see its effectiveness, resistances, and take a quiz!</p>
+             </CardContent>
+          </Card>
         )}
+
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle>Master Quiz</CardTitle>
+            <CardDescription>Ready for a real challenge? Test your knowledge of dual-type matchups.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <MasterQuiz />
+          </CardContent>
+        </Card>
+
       </div>
     </div>
   );
