@@ -65,4 +65,4 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ## License
 
-This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE.md) file for details. (Replace [License Name] with the actual license and ensure you have a LICENSE.md file).
+This project is licensed under the [MIT License]
