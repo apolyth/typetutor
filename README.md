@@ -1,4 +1,4 @@
-# Type Tutoe
+# Type Tutor
 
 A simple website made with AI to learn the Pokémon type table
 
